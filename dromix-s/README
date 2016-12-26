@@ -1,0 +1,47 @@
+dromix-s is an extendible dromix image that proivdes security by using VNC over unix socket to communicate to the app inside the docker container. 
+
+
+Prereq: ssvnc on the host
+
+
+1. 
+Build the Docker Image:
+   
+      docker build -t romich-g/dromix-s
+
+2. 
+Extend the image by running it and installing whatever soft is desired
+     
+     docker run -it --name setup_soft romich-g/dromix-s /bin/bash
+
+3. 
+Commit the changes to a new image
+
+     docker commit setup_soft romich-g/dromix-s-<name of soft executable>
+
+4. 
+Copy the docker.sh to /usr/local/bin
+
+5. 
+Run the new image 
+
+    dromix.sh <name of soft executable>
+
+Note that this will automaticaly delete the container after closing. If you want to keep the changes then use a local copy of dromix.sh, and remove the "--rm" in the docker run line
+
+
+6. 
+Once you've set things up time to integrate things with your desktop. For the browser, for exmaple, create an executable file /usr/bin/dromix-browser and add this line
+
+     dromix-s.sh firefox
+
+Then add a symbolic link from /etc/alternatvies/x-www-browser to this file. And you're all set
+
+
+
+
+Special thanks to:
+https://www.jann.cc/2014/09/06/sandboxing_proprietary_applications_with_docker.html
+
+Yoctoproject Matchbox Window Manager
+https://www.yoctoproject.org/tools-resources/projects
