@@ -24,8 +24,8 @@ fi
 
 docker run --rm \
         --volume=$SOCKETDIR:$SOCKETDIR \
-    romich-g/dromix-s-$1 \
-    /root/run.sh $USER $UID $DPI $GEOM $SOCKET $1 &
+    romich-g/dromix-$1 \
+    /root/run.sh --vnc=y --user=$USER --uid=$UID --dpi=$DPI --geometry=$GEOM --socket=$SOCKET --app=$1 &
 
 while [ ! -S "$SOCKET" ]
 do
