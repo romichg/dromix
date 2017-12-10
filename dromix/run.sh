@@ -68,7 +68,11 @@ else
 
    export DISPLAY=:0
    sudo -u $user Xvfb -dpi $dpi -screen 0 $res &
+   sleep 1
    sudo -u $user matchbox-window-manager -use_titlebar no &
    sudo -u $user $app &
    sudo -u $user /usr/local/bin/x11vnc -unixsockonly $socket
+
+   #removing the X lock in case container runs again 
+   sudo -u $user rm /tmp/.X0-lock
 fi

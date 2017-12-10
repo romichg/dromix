@@ -7,6 +7,8 @@ RUN apt-get -y --no-install-recommends install sudo
 RUN apt-get -y --no-install-recommends install xvfb 
 RUN apt-get -y --no-install-recommends install matchbox-window-manager
 RUN apt-get -y --no-install-recommends install libxtst6 libxinerama1 libxrandr2
+RUN apt-get -y --no-install-recommends install xfonts-75dpi xfonts-100dpi xfonts-terminus xfonts-encodings xfonts-utils
+
 
 
 ADD x11vnc /usr/local/bin/

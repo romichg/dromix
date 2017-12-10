@@ -1,0 +1,18 @@
+#!/bin/bash
+ratpoison -c "frestore `cat ~/fdump1`"
+ratpoison -c "focus"
+sleep 1
+ratpoison -c "exec rxvt"
+sleep 1
+ratpoison -c "focus"
+sleep 1
+ratpoison -c "exec rxvt"
+sleep 1
+ratpoison -c "focus"
+sleep 1
+ratpoison -c "exec rxvt"
+sleep 1
+ratpoison -c "focus"
+sleep 1
+ratpoison -c "exec rxvt"
+

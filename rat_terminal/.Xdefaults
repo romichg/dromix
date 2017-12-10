@@ -1,0 +1,12 @@
+URxvt*geometry: 100x40
+URxvt*fading: 35
+URxvt*shading: 12
+URxvt*saveLines: 12000
+URxvt*background: LightGray
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=19:antialias=true:hinting=true
+URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=19:antialias=true:hinting=true
+URxvt*color4: RoyalBlue
+URxvt*color12: RoyalBlue
+URxvt*scrollBar: true
+URxvt*scrollBar_right: true
+URxvt*scrollstyle: rxvt
