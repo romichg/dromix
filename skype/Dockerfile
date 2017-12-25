@@ -2,9 +2,6 @@
 FROM romich-g/dromix-chromium 
 MAINTAINER Romich G <wassup@romich-g.com>
 
-#TEMP
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install apt-transport-https ca-certificates gnupg
-
 #Add skype repo
 COPY SKYPE-GPG-KEY /root/SKYPE-GPG-KEY 
 RUN apt-key add /root/SKYPE-GPG-KEY
