@@ -1,0 +1,88 @@
+MNT="romich-g"
+IMG="dromix"
+
+install_prereq(){
+  apt-get -y --no-install-recommends install ssvnc
+  update-alternatives --set x-terminal-emulator /usr/bin/urxvt
+}
+
+copy_components() {
+  echo "Copying main components"
+  [ -d /usr/lib/dromix ] || mkdir /usr/lib/dromix
+  cp ./dromix-include /usr/lib/dromix
+  cp ./dromix.sh /usr/bin/dromix.sh
+  chmod 755 /usr/bin/dromix.sh
+  cp ./dromix-s.sh /usr/bin/dromix-s.sh
+  chmod 755 /usr/bin/dromix-s.sh
+}
+
+
+create_minbase() {
+   echo "Creating minimal debian and importing as docker image"
+   apt-get install debootstrap
+   debootstrap --variant=minbase stretch ./minbase
+   tar -C ./minbase -c . | docker import - romich-g/stretch
+   rm -rf ./minbase
+}
+
+build_dromix() {
+   echo "Building the first dromix image"
+   cd ./dromix
+   docker build -t $MNT/$IMG . 
+   cd  ../
+}
+
+build_chromium() {
+   echo "Building the chromium image"
+   cd ./chromium
+   docker build -t $MNT/$IMG-chromium . 
+   echo "dromix.sh --dromix=chromium  --dri=Y chromium --no-sandbox" > /usr/bin/dromix-chromium
+   chmod 755 /usr/bin/dromix-chromium
+   echo "dromix-s.sh --dromix=chromium chromium --no-sandbox" > /usr/bin/dromix-s-chromium
+   chmod 755 /usr/bin/dromix-s-chromium
+   update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/dromix-chromium 30 
+   update-alternatives --install /usr/bin/x-www-browser-s x-www-browser-s /usr/bin/dromix-s-chromium 30 
+   cd ../
+}
+
+build_firefox() {
+   echo "Building the firefox image"
+   cd ./firefox
+   docker build -t $MNT/$IMG-firefox . 
+   echo "dromix.sh --dromix=firefox  --dri=Y --extra=--shm-size=256m firefox --no-remote --private-window" > /usr/bin/dromix-firefox
+   chmod 755 /usr/bin/dromix-firefox
+   echo "dromix-s.sh --dromix=firefox --extra=--shm-size=256m firefox --no-remote --private-window" > /usr/bin/dromix-s-firefox
+   chmod 755 /usr/bin/dromix-s-firefox
+   update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/dromix-firefox 40
+   update-alternatives --install /usr/bin/x-www-browser-s x-www-browser-s /usr/bin/dromix-s-firefox 30
+   cd ../
+}
+
+build_thunderbird() {
+   echo "Building the thunderbird image"
+   cd ./thunderbird
+   docker build -t $MNT/$IMG-thunderbird . 
+   echo "dromix.sh --dromix=thunderbird  --dri=Y thunderbird --no-remote" > /usr/bin/dromix-thunderbird
+   chmod 755 /usr/bin/dromix-thunderbird
+   echo "dromix-s.sh --dromix=thunderbird  --dri=Y thunderbird --no-remote" > /usr/bin/dromix-s-thunderbird
+   chmod 755 /usr/bin/dromix-s-thunderbird
+   cd ../
+}
+
+build_skype() {
+   echo "Building the skype image"
+   cd ./skype
+   docker build -t $MNT/$IMG-skype . 
+   echo "dromix.sh --dromix=skype  --dri=Y --device=/dev/video0 monitor_skype" > /usr/bin/dromix-skype
+   chmod 755 /usr/bin/dromix-skype
+   cd ../
+}
+
+#install_prereq
+#copy_components
+#create_minbase
+#build_dromix 
+build_chromium
+#build_firefox
+#build_thunderbird
+build_skype

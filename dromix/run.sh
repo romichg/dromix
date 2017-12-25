@@ -32,6 +32,10 @@ case $i in
     vnc="${i#*=}"
     shift # past argument=value
     ;;
+    --pulse=*)
+    pulse="${i#*=}"
+    shift # past argument=value
+    ;;
     *)
             # unknown option
     ;;
@@ -44,20 +48,26 @@ done
 [ -z "$vnc" ] && exit 1
 
 
-id -u $user > /dev/null
+id -u $user > /dev/null 2>&1
 
 if [ $? -ne 0 ]
 then
-   useradd -m $user
-   usermod --shell /bin/bash $user
-   usermod --uid $uid $user
-   groupmod --gid $uid $user
+   useradd -m $user > /dev/null 2>&1
+   usermod --shell /bin/bash $user > /dev/null 2>&1
+   usermod --uid $uid $user > /dev/null 2>&1
+   usermod -G audio,video -a $user > /dev/null 2>&1
+   groupmod --gid $uid $user > /dev/null 2>&1
+   if [ -d /root/config ]
+   then
+      cp -R /root/config/. /home/$user/
+      chown -R $user.$user /home/$user
+   fi
 fi
 
 if [ "$vnc" != "y" ]
 then
    echo "Starting in X mode"
-   sudo -u $user $app
+   sudo -u $user PULSE_SERVER=$pulse $app
 else
    echo "Staritng in VNC mode"
    [ -z "$dpi" ] && exit 1
@@ -66,13 +76,12 @@ else
 
    res="$geom"x24
 
-   export DISPLAY=:0
-   sudo -u $user Xvfb -dpi $dpi -screen 0 $res &
-   sleep 1
-   sudo -u $user matchbox-window-manager -use_titlebar no &
-   sudo -u $user $app &
-   sudo -u $user /usr/local/bin/x11vnc -unixsockonly $socket
+   Xvfb -dpi $dpi -screen 0 $res &
+   sleep 2
+   sudo -u $user DISPLAY=:0 PULSE_SERVER=$pulse matchbox-window-manager -use_titlebar no &
+   sudo -u $user DISPLAY=:0 PULSE_SERVER=$pulse $app & 
+   sudo -u $user DISPLAY=:0 PULSE_SERVER=$pulse /usr/local/bin/x11vnc -nopw -noxdamage -ncache_cr -unixsockonly $socket
 
    #removing the X lock in case container runs again 
-   sudo -u $user rm /tmp/.X0-lock
+   rm -f /tmp/.X0-lock
 fi

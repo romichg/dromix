@@ -1,0 +1,21 @@
+Add-ons=%7Be2fda1a4-762b-4020-b5ad-a41df1933103%7D:5.4.5,%7B847b3a00-7ab1-11d4-8f02-006008948af5%7D:1.9.9,%7Ba62ef8ec-5fdc-40c2-873c-223b8a6925cc%7D:3.3
+TelemetryEnvironment={"build":{"applicationId":"{3550f703-e582-4d05-9a08-453d09bdfdc6}","applicationName":"Thunderbird","architecture":"x86-64","buildId":"20171209081708","version":"52.5.0","vendor":null,"platformVersion":"52.5.0","xpcomAbi":"x86_64-gcc3","hotfixVersion":null},"partner":{"distributionId":null,"distributionVersion":null,"partnerId":null,"distributor":null,"distributorChannel":null,"partnerNames":[]},"system":{"memoryMB":2004,"virtualMaxMB":null,"cpu":{"count":2,"cores":2,"vendor":"GenuineIntel","family":6,"model":42,"stepping":7,"l2cacheKB":256,"l3cacheKB":3072,"speedMHz":null,"extensions":["hasMMX","hasSSE","hasSSE2","hasSSE3","hasSSSE3","hasSSE4_1","hasSSE4_2","hasAVX"]},"os":{"name":"Linux","version":"4.9.0-4-amd64","locale":"en-US"},"hdd":{"profile":{"model":null,"revision":null},"binary":{"model":null,"revision":null},"system":{"model":null,"revision":null}},"gfx":{"D2DEnabled":null,"DWriteEnabled":null,"ContentBackend":"Skia","adapters":[{"description":"VMware, Inc. -- Gallium 0.4 on llvmpipe (LLVM 3.9, 256 bits)","vendorID":"VMware, Inc.","deviceID":"Gallium 0.4 on llvmpipe (LLVM 3.9, 256 bits)","subsysID":null,"RAM":null,"driver":null,"driverVersion":"3.0 Mesa 13.0.6","driverDate":null,"GPUActive":true}],"monitors":[],"features":{"compositor":"none"}}},"settings":{"blocklistEnabled":true,"e10sEnabled":false,"e10sCohort":"unknown","telemetryEnabled":false,"locale":"en-US","update":{"channel":"default","enabled":true,"autoDownload":true},"userPrefs":{"browser.cache.disk.capacity":358400,"layers.acceleration.disabled":false},"addonCompatibilityCheckEnabled":true,"isDefaultBrowser":null},"profile":{}}
+StartupTime=1514145687
+SafeMode=0
+useragent_locale=en-US
+ProductName=Thunderbird
+Theme=classic/1.0
+InstallTime=1514145415
+ReleaseChannel=default
+Notes=FP(D00-L1000-W00000000-T0000) OpenGL: VMware, Inc. -- Gallium 0.4 on llvmpipe (LLVM 3.9, 256 bits) -- 3.0 Mesa 13.0.6 -- texture_from_pixmap\n
+FramePoisonSize=4096
+Version=52.5.0
+FramePoisonBase=7ffffffff0dea000
+ServerURL=https://crash-reports.mozilla.com/submit?id={3550f703-e582-4d05-9a08-453d09bdfdc6}&version=52.5.0&buildid=20171209081708
+ContentSandboxCapabilities=85
+EMCheckCompatibility=true
+StartupCrash=0
+BuildID=20171209081708
+ProductID={3550f703-e582-4d05-9a08-453d09bdfdc6}
+CrashTime=1514145690
+UptimeTS=3.1039945

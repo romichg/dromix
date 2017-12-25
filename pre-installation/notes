@@ -1,0 +1,3 @@
+add romix user to the docker group
+add "pulseaudio" package
+add "pavucontrol" package and pavucontrol into opebox menu

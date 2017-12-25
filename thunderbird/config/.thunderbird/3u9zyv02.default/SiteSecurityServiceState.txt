@@ -1,0 +1,3 @@
+www.gandi.net:HSTS	0	17524	1529913422777,1,0
+blocklist.addons.mozilla.org:HSTS	0	17524	1514146067292,1,0
+beta.gandi.net:HSTS	0	17524	1529913422949,1,0
