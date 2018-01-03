@@ -11,7 +11,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 #Install stuff for dromix locales, sudo and fonts
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install sudo procps locales \
 	xfonts-75dpi xfonts-100dpi xfonts-terminus xfonts-encodings xfonts-utils \
-	apt-https-transport ca-certificates gnupg
+	apt-transport-https ca-certificates gnupg
 
 #Install stuff for dromix-s - needed to run window manager and stream over socket
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install xvfb \
