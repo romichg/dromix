@@ -32,6 +32,10 @@ case $i in
     vnc="${i#*=}"
     shift # past argument=value
     ;;
+    --defconfig=*)
+    defconfig="${i#*=}"
+    shift # past argument=value
+    ;;
     --pulse=*)
     pulse="${i#*=}"
     shift # past argument=value
@@ -46,6 +50,7 @@ done
 [ -z "$uid" ] && exit 1
 [ -z "$app" ] && exit 1
 [ -z "$vnc" ] && exit 1
+[ -z "$defconfig" ] && exit 1
 
 
 id -u $user > /dev/null 2>&1
@@ -57,11 +62,12 @@ then
    usermod --uid $uid $user > /dev/null 2>&1
    usermod -G audio,video -a $user > /dev/null 2>&1
    groupmod --gid $uid $user > /dev/null 2>&1
-   if [ -d /root/config ]
+   if [ -d /root/config ] && [ $defconfig != "N" ]
    then
       cp -R /root/config/. /home/$user/
       chown -R $user.$user /home/$user
    fi
+   chown -R $user.$user /home/$user
 fi
 
 if [ "$vnc" != "y" ]

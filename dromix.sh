@@ -15,11 +15,12 @@ docker run --rm   \
         --env="DISPLAY" \
         --name=$DROMIX-$RAND \
         --hostname=$DROMIX-$RAND \
+	--net=dromnet1 \
 	  ${DEVICES} \
           ${VOLUMES} \
           ${EXTRA} \
     romich-g/dromix-$DROMIX \
-    /root/run.sh --vnc=f --user=$USER --uid=$UID --pulse=$PULSE_AUDIO_CONTAINER --app="$*"
+    /root/run.sh --vnc=f --user=$USER --uid=$UID --defconfig=$defconfig --pulse=$PULSE_AUDIO_CONTAINER --app="$*"
 
 rm $XAUTH
 [ -n $INCOMING ] && rm -rf $INCOMING

@@ -25,11 +25,12 @@ docker run --rm \
         --volume=$PULSE_AUDIO:$PULSE_AUDIO_CONTAINER \
         --name=$DROMIX-$RAND \
         --hostname=$DROMIX-$RAND \
+	--net=dromnet1 \
 	${DEVICES} \
 	${VOLUMES} \
 	${EXTRA} \
     romich-g/dromix-$DROMIX \
-    /root/run.sh --vnc=y --user=$USER --uid=$UID --pulse=$PULSE_AUDIO_CONTAINER --dpi=$DPI --geometry=$GEOM --socket=$SOCKET --app="$*" &
+    /root/run.sh --vnc=y --user=$USER --uid=$UID --defconfig=$defconfig --pulse=$PULSE_AUDIO_CONTAINER --dpi=$DPI --geometry=$GEOM --socket=$SOCKET --app="$*" &
 
 while [ ! -S "$SOCKET" ]
 do

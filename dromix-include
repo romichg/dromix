@@ -25,6 +25,10 @@ do
          video="${i#*=}"
 	 shift
       ;;
+      --defconfig=*)
+         defconfig="${i#*=}"
+	 shift
+      ;;
       --temptrash=*)
          temptrash="${i#*=}"
 	 shift
@@ -56,7 +60,11 @@ do
    esac
 done
 
+EXTRA=$(echo $EXTRA | sed 's/__/ /g')
+
 [ -n $DROMIX ] || exit 1
+
+[ -z $defconfig ] && defconfig=Y
 
 if [[ -z $internal  || ( -n $internal  &&  "$internal" != "Y" ) ]]
 then
