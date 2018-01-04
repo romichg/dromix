@@ -1,6 +1,4 @@
 add romix user to the docker group
-add "pulseaudio" package
-add "pavucontrol" package and pavucontrol into opebox menu
 
 copy daemon.json to /etc/docker - this will disable the default bridge network
 add a new bridge network by

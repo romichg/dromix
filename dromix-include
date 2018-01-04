@@ -1,6 +1,6 @@
 RAND=`tr -cd '[:alnum:]' < /dev/urandom | head -c6`
-PULSE_AUDIO=/run/user/$UID/pulse/native
-PULSE_AUDIO_CONTAINER=/tmp/pulse/native
+PULSE_AUDIO=/run/user/$UID/pulse
+PULSE_AUDIO_CONTAINER=/tmp/pulse
 BASE_DIR=$HOME
 WORKSTUFF=$BASE_DIR/workstuff
 TEMPTRASH=$BASE_DIR/temptrash

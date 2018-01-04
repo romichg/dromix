@@ -20,7 +20,7 @@ docker run --rm   \
           ${VOLUMES} \
           ${EXTRA} \
     romich-g/dromix-$DROMIX \
-    /root/run.sh --vnc=f --user=$USER --uid=$UID --defconfig=$defconfig --pulse=$PULSE_AUDIO_CONTAINER --app="$*"
+    /root/run.sh --vnc=f --user=$USER --uid=$UID --defconfig=$defconfig --pulse=$PULSE_AUDIO_CONTAINER/native --app="$*"
 
 rm $XAUTH
 [ -n $INCOMING ] && rm -rf $INCOMING

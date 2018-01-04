@@ -16,7 +16,7 @@ fi
 
 if [ -z "$GEOM" ] 
 then
-   GEOM=1024x768
+   GEOM=1920x1200
 fi
 
 
@@ -30,7 +30,7 @@ docker run --rm \
 	${VOLUMES} \
 	${EXTRA} \
     romich-g/dromix-$DROMIX \
-    /root/run.sh --vnc=y --user=$USER --uid=$UID --defconfig=$defconfig --pulse=$PULSE_AUDIO_CONTAINER --dpi=$DPI --geometry=$GEOM --socket=$SOCKET --app="$*" &
+    /root/run.sh --vnc=y --user=$USER --uid=$UID --defconfig=$defconfig --pulse=$PULSE_AUDIO_CONTAINER/native --dpi=$DPI --geometry=$GEOM --socket=$SOCKET --app="$*" &
 
 while [ ! -S "$SOCKET" ]
 do
