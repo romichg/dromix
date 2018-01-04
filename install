@@ -78,11 +78,11 @@ build_skype() {
    cd ../
 }
 
-#install_prereq
-#copy_components
-#create_minbase
-#build_dromix 
+install_prereq
+copy_components
+create_minbase
+build_dromix 
 build_chromium
-#build_firefox
-#build_thunderbird
+build_firefox
+build_thunderbird
 build_skype
