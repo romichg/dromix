@@ -1,0 +1,7 @@
+www.google-analytics.com:HSTS	0	17536	1526047451989,1,1
+stats.g.doubleclick.net:HSTS	0	17536	1526047452195,1,1
+connect.facebook.net:HSTS	0	17536	1546697052209,1,1
+ads.yahoo.com:HSTS	0	17536	1546697052340,1,0
+versioncheck.addons.mozilla.org:HPKP	0	17536	1520345409894,1,1,WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18=r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=
+versioncheck.addons.mozilla.org:HSTS	0	17536	1515161709893,1,0
+analytics.twitter.com:HSTS	0	17536	2146299617684,1,0

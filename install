@@ -54,7 +54,7 @@ build_firefox() {
    echo "dromix-s.sh --dromix=firefox --extra=--shm-size=256m firefox --no-remote --private-window" > /usr/bin/dromix-s-firefox
    chmod 755 /usr/bin/dromix-s-firefox
    update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/dromix-firefox 40
-   update-alternatives --install /usr/bin/x-www-browser-s x-www-browser-s /usr/bin/dromix-s-firefox 30
+   update-alternatives --install /usr/bin/x-www-browser-s x-www-browser-s /usr/bin/dromix-s-firefox 40
    cd ../
 }
 
@@ -78,6 +78,32 @@ build_skype() {
    cd ../
 }
 
+build_palemoon() {
+   BT="palemoon"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT  --dri=Y $BT --no-remote" > /usr/bin/dromix-$BT
+   chmod 755 /usr/bin/dromix-$BT
+   echo "dromix.sh --dromix=$BT  --dri=Y $BT --no-remote" > /usr/bin/dromix-s-$BT
+   chmod 755 /usr/bin/dromix-$BT
+   update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/dromix-$BT 70 
+   update-alternatives --install /usr/bin/x-www-browser-s x-www-browser-s /usr/bin/dromix-s-$BT 70
+   cd ../
+   $BT=""
+}
+
+build_claws-mail() {
+   BT="claws-mail"
+   echo "Building the $BT image"
+   cd ./bt
+   docker build -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT  --dri=Y --device=/dev/video0 claws-mail" > /usr/bin/dromix-$BT
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   $BT=""
+}
+
 install_prereq
 copy_components
 create_minbase
@@ -86,3 +112,5 @@ build_chromium
 build_firefox
 build_thunderbird
 build_skype
+build_palemoon
+build_claws-mail
