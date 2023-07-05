@@ -25,7 +25,7 @@ docker run --rm \
         --volume=$PULSE_AUDIO:$PULSE_AUDIO_CONTAINER \
         --name=$DROMIX-$RAND \
         --hostname=$DROMIX-$RAND \
-	--net=dromnet1 \
+	--net=$NETWORK \
 	${DEVICES} \
 	${VOLUMES} \
 	${EXTRA} \
