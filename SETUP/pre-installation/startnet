@@ -1,0 +1,13 @@
+# This script will setup all the dromnet network routing. Must be done on every reboot
+
+
+TABLE=200
+docker network ls -q -f Name="dromnet" | xargs docker network inspect --format='{{.IPAM.Config}}'  | awk '{print $2}' | while read LINE
+do
+ NETWORK=`echo $LINE | awk -F\. '{print $1"."$2"."$3}'`
+ sudo ip rule add from "$NETWORK".0/26 table $TABLE
+ sudo ip route add default via $NETWORK.253 table $TABLE
+ TABLE=$(($TABLE+1))
+done
+
+

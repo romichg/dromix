@@ -1,0 +1,7 @@
+docker images | grep dromix | awk '{print $1}' |  while read LINE
+do 
+   docker run --name=update --net=dromnet1 $LINE /bin/bash -c "apt-get update; apt-get -y upgrade"
+   docker commit update $LINE
+   docker rm update
+done
+

@@ -1,8 +1,0 @@
-skypeforlinux
-SKYPE_RUN=0
-while [ $SKYPE_RUN -eq 0 ]
-do
-sleep 5
-ps -ef | grep skype | grep -v monitor_skype | grep -v grep > /dev/null 2>&1
-SKYPE_RUN=$?
-done

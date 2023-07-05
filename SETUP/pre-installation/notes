@@ -1,0 +1,7 @@
+add romix user to the docker group
+
+copy daemon.json to /etc/docker - this will disable the default bridge network
+
+create networks with createnet script in this directory
+
+NOTE THAT for --extra=ABC in the dromix.sh arguments any spaces in the ABC part (i.e. A B C) must be replaced by __ (two underscores) this is because we have a poors man of parcing arguments

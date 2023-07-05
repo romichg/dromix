@@ -6,7 +6,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 #Install Thunderbird
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install thunderbird lightning enigmail calendar-google-provider fonts-lyx hunspell hunspell-en-us xul-ext-sogo-connector
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install thunderbird fonts-lyx hunspell hunspell-en-us 
 
 #Copy our configs
 COPY config/ /root/config

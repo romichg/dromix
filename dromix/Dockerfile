@@ -1,8 +1,8 @@
-FROM romich-g/stretch
-MAINTAINER Romich G <wassup@romich-g.com>
+FROM romich-g/buster
+MAINTAINER Romich G <hello@romich-g.com>
 
 #Add security repo
-RUN echo "deb http://security.debian.org/ stretch/updates main contrib non-free" >> /etc/apt/sources.list
+RUN echo "deb http://deb.debian.org/debian-security/ buster/updates main non-free contrib" >> /etc/apt/sources.list
 
 #Update packages
 RUN apt-get update 
@@ -25,7 +25,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install li
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install pulseaudio
 
 #Install utilities for debuging and stuf	  
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install rxvt vim strace
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install rxvt-unicode vim strace
 
 #Set timezone (SOF Q. 683605 )
 ENV TZ=America/New_York

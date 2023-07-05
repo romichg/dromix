@@ -6,5 +6,5 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 #Install firefox
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install libreoffice
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install libreoffice aspell-en aspell-ru
 

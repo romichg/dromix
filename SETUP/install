@@ -1,0 +1,259 @@
+MNT="romich-g"
+IMG="dromix"
+NET="loconet0"
+MINBASE="bookworm"
+
+if [ ! -f /usr/bin/curl ]
+then
+  echo "Please install curl"
+  exit 5
+fi
+
+install_prereq(){
+  apt-get -y --no-install-recommends install ssvnc
+  update-alternatives --set x-terminal-emulator /usr/bin/urxvt
+}
+
+copy_components() {
+  echo "Copying main components"
+  [ -d /usr/lib/dromix ] || mkdir /usr/lib/dromix
+  cp ./dromix-include /usr/lib/dromix
+  cp ./dromix.sh /usr/bin/dromix.sh
+  chmod 755 /usr/bin/dromix.sh
+  cp ./dromix-s.sh /usr/bin/dromix-s.sh
+  chmod 755 /usr/bin/dromix-s.sh
+}
+
+
+create_minbase() {
+   echo "Creating minimal debian and importing as docker image"
+   apt-get install debootstrap
+   debootstrap --variant=minbase $MINBASE ./minbase
+   tar -C ./minbase -c . | docker import - romich-g/$MINBASE
+   rm -rf ./minbase
+}
+
+build_dromix() {
+   echo "Building the first dromix image"
+   cd ./dromix
+   docker build --no-cache --network=$NET -t $MNT/$IMG . 
+   cd  ../
+}
+
+build_chromium() {
+   echo "Building the chromium image"
+   cd ./chromium
+   docker build --no-cache --network=$NET -t $MNT/$IMG-chromium . 
+   echo "dromix.sh --dromix=chromium  --dri=Y chromium --no-sandbox" > /usr/bin/dromix-chromium
+   chmod 755 /usr/bin/dromix-chromium
+   echo "dromix-s.sh --dromix=chromium chromium --no-sandbox" > /usr/bin/dromix-s-chromium
+   chmod 755 /usr/bin/dromix-s-chromium
+   update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/dromix-chromium 30 
+   update-alternatives --install /usr/bin/x-www-browser-s x-www-browser-s /usr/bin/dromix-s-chromium 30 
+   cd ../
+}
+
+build_firefox() {
+   echo "Building the firefox image"
+   cd ./firefox
+   docker build --no-cache --network=$NET -t $MNT/$IMG-firefox . 
+   echo "dromix.sh --dromix=firefox  --dri=Y --extra=--shm-size=512m firefox --no-remote --private-window" > /usr/bin/dromix-firefox
+   chmod 755 /usr/bin/dromix-firefox
+   echo "dromix-s.sh --dromix=firefox --extra=--shm-size=512m firefox --no-remote --private-window" > /usr/bin/dromix-s-firefox
+   chmod 755 /usr/bin/dromix-s-firefox
+   update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/dromix-firefox 40
+   update-alternatives --install /usr/bin/x-www-browser-s x-www-browser-s /usr/bin/dromix-s-firefox 40
+   cd ../
+}
+
+build_thunderbird() {
+   echo "Building the thunderbird image"
+   cd ./thunderbird
+   docker build --no-cache --network=$NET -t $MNT/$IMG-thunderbird . 
+   echo "dromix.sh --dromix=thunderbird  --dri=Y thunderbird --no-remote" > /usr/bin/dromix-thunderbird
+   chmod 755 /usr/bin/dromix-thunderbird
+   echo "dromix-s.sh --dromix=thunderbird  --dri=Y thunderbird --no-remote" > /usr/bin/dromix-s-thunderbird
+   chmod 755 /usr/bin/dromix-s-thunderbird
+   cd ../
+}
+
+build_qpdfview() {
+   BT="qpdfview"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=Y --dri=Y $BT" > /usr/bin/dromix-$BT
+   update-alternatives --install /usr/bin/x-pdf-view x-pdf-view /usr/bin/dromix-$BT 70 
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
+build_calibre() {
+   BT="calibre"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=N --dri=Y $BT" > /usr/bin/dromix-$BT
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
+build_libreoffice() {
+   BT="libreoffice"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache  --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=Y --dri=Y $BT" > /usr/bin/dromix-$BT
+   update-alternatives --install /usr/bin/office office /usr/bin/dromix-$BT 70 
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
+build_eog() {
+   BT="eog"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=Y --dri=Y $BT" > /usr/bin/dromix-$BT
+   update-alternatives --install /usr/bin/eog eog /usr/bin/dromix-$BT 70 
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
+build_vlc() {
+   BT="vlc"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=Y --dri=Y $BT" > /usr/bin/dromix-$BT
+   update-alternatives --install /usr/bin/vlc vlc /usr/bin/dromix-$BT 70 
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
+build_twinkle() {
+   BT="twinkle"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=Y --dri=Y $BT" > /usr/bin/dromix-$BT
+   update-alternatives --install /usr/bin/twinkle twinkle /usr/bin/dromix-$BT 70 
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
+build_zim() {
+   BT="zim"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=Y --dri=Y $BT" > /usr/bin/dromix-$BT
+   update-alternatives --install /usr/bin/zim zim /usr/bin/dromix-$BT 70 
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
+build_cloud-client() {
+   BT="cloud-client"
+   echo "Building the $BT image"
+   cd ./$BT
+   rm Nextcloud*AppImage*
+   pip install requests python-gnupg
+   python download_nextcloud_client.py  
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
+build_zoom() {
+   BT="zoom"
+   echo "Building the $BT image"
+   cd ./$BT
+   curl -o zoom_amd64.deb -L https://zoom.us/client/latest/zoom_amd64.deb
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
+build_chats() {
+   BT="chats"
+   echo "Building the $BT image"
+   cd ./$BT
+   mv discord.de:b olddiscord.deb
+   curl --output discord.deb -L 'https://discord.com/api/download?platform=linux&format=deb'
+   mv slack.deb oldslack.deb
+   pip install requests beautifulsoup4
+   python download_slack.py 
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
+build_signal() {
+   BT="signal"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
+build_telegram() {
+   BT="telegram"
+   echo "Building the $BT image"
+   cd ./$BT
+   curl -o tsetup.tar -L https://telegram.org/dl/desktop/linux
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
+build_tor() {
+   BT="tor"
+   echo "Building the $BT image"
+   cd ./$BT
+   rm tor-browser*
+   python download_tor.py
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
+build_vpn() {
+   BT="vpn"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
+
+#install_prereq
+#copy_components
+#create_minbase
+#build_dromix 
+build_chromium
+build_firefox
+build_thunderbird
+build_qpdfview
+build_calibre
+build_libreoffice
+build_eog
+build_vlc
+build_twinkle
+build_zim
+build_cloud-client
+build_zoom
+build_chats
+build_telegram
+build_signal
+build_tor
+build_vpn

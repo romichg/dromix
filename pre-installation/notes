@@ -1,7 +1,0 @@
-add romix user to the docker group
-
-copy daemon.json to /etc/docker - this will disable the default bridge network
-add a new bridge network by
-sudo docker network create --driver=bridge --subnet=172.20.0.0/16 --gateway=172.20.0.1 -o --icc=true -o --ip-masq=true -o --ipv6=false --ip-range=172.20.1.0/24 dromnet1
-
-NOTE THAT for --extra=ABC in the dromix.sh arguments any spaces in the ABC part (i.e. A B C) must be replaced by __ (two underscores) this is because we have a poors man of parcing arguments

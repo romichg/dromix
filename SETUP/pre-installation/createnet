@@ -1,0 +1,25 @@
+# This creates the docker network for every network path 
+# You need to upate the top variables yourself to make sure there are no conflicts
+# Also note that all dromix networks must begin with "dromnet" otherwise the scripts won't work
+
+NETWORK='dromnet0'
+SUBNET='172.23.0'
+TABLE='203'
+
+sudo docker network create --driver=bridge --subnet="$SUBNET".0/24 --gateway="$SUBNET".1 -o --icc=true -o --ip-masq=true -o --ipv6=false --ip-range="$SUBNET".0/27 "$NETWORK"
+sudo ip rule add from "$SUBNET".0/26 table $TABLE
+sudo ip route add default via "$SUBNET".253 table $TABLE
+
+mkdir "$HOME/VP/$NETWORK"
+
+echo docker run --rm -it  \
+	--name "$NETWORK"-gateway \
+	--cap-add NET_ADMIN \
+	--volume="$HOME/VP/$NETWORK":/root/netconfig:ro \
+	--device=/dev/net/tun:/dev/net/tun \
+        --net="$NETWORK" \
+        --ip="$SUBNET".253 \
+        --hostname=$NETWORK-gateway \
+	romich-g/vpn \
+	/bin/bash > "$HOME/VP/$NETWORK/start"
+
