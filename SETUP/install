@@ -1,3 +1,5 @@
+#!/bin/bash
+
 MNT="romich-g"
 IMG="dromix"
 NET="loconet0"
@@ -9,18 +11,32 @@ then
   exit 5
 fi
 
+if [ ! -f /usr/bin/python ]
+then
+  echo "Please install python \"sudo apt install python-is-python3 pip python\""
+  exit 5
+fi
+
+if [ ! -f /usr/bin/pip ]
+then
+  echo "Please install pip"
+  exit 5
+fi
+
+
 install_prereq(){
   apt-get -y --no-install-recommends install ssvnc
   update-alternatives --set x-terminal-emulator /usr/bin/urxvt
+  pip install requests beautifulsoup4  python-gnupg --break-system-packages
 }
 
 copy_components() {
   echo "Copying main components"
   [ -d /usr/lib/dromix ] || mkdir /usr/lib/dromix
-  cp ./dromix-include /usr/lib/dromix
-  cp ./dromix.sh /usr/bin/dromix.sh
+  cp ./SETUP/dromix-include /usr/lib/dromix
+  cp ./SETUP/dromix.sh /usr/bin/dromix.sh
   chmod 755 /usr/bin/dromix.sh
-  cp ./dromix-s.sh /usr/bin/dromix-s.sh
+  cp ./SETUP/dromix-s.sh /usr/bin/dromix-s.sh
   chmod 755 /usr/bin/dromix-s.sh
 }
 
@@ -165,7 +181,6 @@ build_cloud-client() {
    echo "Building the $BT image"
    cd ./$BT
    rm Nextcloud*AppImage*
-   pip install requests python-gnupg
    python download_nextcloud_client.py  
    docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
    cd ../
@@ -189,7 +204,6 @@ build_chats() {
    mv discord.de:b olddiscord.deb
    curl --output discord.deb -L 'https://discord.com/api/download?platform=linux&format=deb'
    mv slack.deb oldslack.deb
-   pip install requests beautifulsoup4
    python download_slack.py 
    docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
    cd ../
@@ -240,20 +254,20 @@ build_vpn() {
 #copy_components
 #create_minbase
 #build_dromix 
-build_chromium
-build_firefox
-build_thunderbird
-build_qpdfview
-build_calibre
-build_libreoffice
-build_eog
-build_vlc
-build_twinkle
-build_zim
-build_cloud-client
-build_zoom
-build_chats
+#build_chromium
+#build_firefox
+#build_thunderbird
+#build_qpdfview
+#build_calibre
+#build_libreoffice
+#build_eog
+#build_vlc
+#build_twinkle
+#build_zim
+#build_cloud-client
+#build_zoom
+#build_chats
 build_telegram
-build_signal
-build_tor
-build_vpn
+#build_signal
+#build_tor
+#build_vpn

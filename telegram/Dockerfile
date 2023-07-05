@@ -4,6 +4,7 @@ MAINTAINER Romich G <wassup@romich-g.com>
 #Update packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install xz-utils 
 
 #Copy package 
 # Install Telegram

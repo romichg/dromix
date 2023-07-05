@@ -1,10 +1,10 @@
 RAND=`tr -cd '[:alnum:]' < /dev/urandom | head -c6`
 PULSE_AUDIO=/run/user/$UID/pulse
 PULSE_AUDIO_CONTAINER=/tmp/pulse
-BASE_DIR=/media/n9
+BASE_DIR=$HOME
 WORKSTUFF=$BASE_DIR/workstuff
 TEMPTRASH=$BASE_DIR/temptrash
-NETWORK='dromnet1'
+NETWORK='loconet0'
 
 #Get the args
 for i in "$@"
