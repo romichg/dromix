@@ -79,7 +79,7 @@ def validate_gpg_signature(asset_file, signature_file, key_file):
 
 
 href_keyword = 'linux'
-key_file = 'tor.key' 
+key_file = 'tor.keyring' 
 url = 'https://www.torproject.org/download/'
 
 try:

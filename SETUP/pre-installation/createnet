@@ -1,8 +1,11 @@
-# This creates the docker network for every network path 
+# This is used to create networks for particular purposes (ex VPN to office) 
+# You need to run this script for every network you want to create.
 # You need to upate the top variables yourself to make sure there are no conflicts
 # Also note that all dromix networks must begin with "dromnet" otherwise the scripts won't work
+# Start scripts need to specify which network the docker container is being attached to
+# The default is dromnet1
 
-NETWORK='dromnet0'
+NETWORK='dromnet1'
 SUBNET='172.23.0'
 TABLE='203'
 

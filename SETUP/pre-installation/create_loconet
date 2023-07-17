@@ -1,0 +1,6 @@
+# This creates the loconet0 network used for local routing
+
+NETWORK='loconet0'
+SUBNET='172.19.0'
+
+sudo docker network create --driver=bridge --subnet="$SUBNET".0/24 --gateway="$SUBNET".1 -o --icc=true -o --ip-masq=true -o --ipv6=false --ip-range="$SUBNET".0/27 "$NETWORK"
