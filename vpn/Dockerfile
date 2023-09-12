@@ -1,8 +1,8 @@
-FROM romich-g/buster
+FROM romich-g/bookworm
 MAINTAINER Romich G <wassup@romich-g.com>
 
 #Add security repo
-RUN echo "deb http://security.debian.org/ buster/updates main contrib non-free" >> /etc/apt/sources.list
+RUN echo "deb http://deb.debian.org/debian-security/ bookworm-security main non-free-firmware non-free contrib" >> /etc/apt/sources.list
 
 #Update packages
 RUN apt-get update 
