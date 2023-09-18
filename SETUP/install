@@ -34,6 +34,7 @@ copy_components() {
   echo "Copying main components"
   [ -d /usr/lib/dromix ] || mkdir /usr/lib/dromix
   cp ./SETUP/dromix-include /usr/lib/dromix
+  chmod 755 /usr/lib/dromix/dromix-include
   cp ./SETUP/dromix.sh /usr/bin/dromix.sh
   chmod 755 /usr/bin/dromix.sh
   cp ./SETUP/dromix-s.sh /usr/bin/dromix-s.sh
