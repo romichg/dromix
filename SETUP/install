@@ -239,6 +239,16 @@ build_telegram() {
    BT=""
 }
 
+build_sweethome3d() {
+   BT="sweethome3d"
+   echo "Building the $BT image"
+   cd ./$BT
+   curl -o sweethome3d.tgz -L http://sourceforge.net/projects/sweethome3d/files/SweetHome3D/SweetHome3D-7.2/SweetHome3D-7.2-linux-x64.tgz/download
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
 build_tor() {
    BT="tor"
    echo "Building the $BT image"
@@ -282,3 +292,4 @@ build_vpn() {
 #build_tor
 #build_vpn
 #build_1password
+#build_sweethome3d
