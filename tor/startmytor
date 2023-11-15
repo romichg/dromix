@@ -1,4 +1,4 @@
-tar xvfJ /usr/local/share/tor-browser-linux64*
-cd ./tor-browser_en-US
+tar xvfJ /usr/local/share/tor-browser-linux*
+cd ./tor-browser
 ./start-tor-browser.desktop
 
