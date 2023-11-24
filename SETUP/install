@@ -268,6 +268,16 @@ build_vpn() {
    cd ../
    BT=""
 }
+build_portfolio-performance() {
+   BT="portfolio-performance"
+   echo "Building the $BT image"
+   cd ./$BT
+   rm PortfolioPerformance*tar.gz 
+   python download_portfolio-performance.py  
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
 
 
 #install_prereq
@@ -293,3 +303,4 @@ build_vpn() {
 #build_vpn
 #build_1password
 #build_sweethome3d
+build_portfolio-performance
