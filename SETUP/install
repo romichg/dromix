@@ -106,6 +106,17 @@ build_qpdfview() {
    BT=""
 }
 
+build_gimp() {
+   BT="gimp"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   echo "dromix.sh --dromix=$BT --temptrash=Y --internal=Y --dri=Y $BT" > /usr/bin/dromix-$BT
+   chmod 755 /usr/bin/dromix-$BT
+   cd ../
+   BT=""
+}
+
 build_calibre() {
    BT="calibre"
    echo "Building the $BT image"
@@ -303,4 +314,5 @@ build_portfolio-performance() {
 #build_vpn
 #build_1password
 #build_sweethome3d
-build_portfolio-performance
+#build_portfolio-performance
+build_gimp
