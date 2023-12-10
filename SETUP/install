@@ -290,6 +290,17 @@ build_portfolio-performance() {
    BT=""
 }
 
+build_threat-dragon() {
+   BT="threat-dragon"
+   echo "Building the $BT image"
+   cd ./$BT
+   rm threat-dragon*deb
+   python download_threat-dragon.py  
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+
 
 #install_prereq
 #copy_components
@@ -315,4 +326,5 @@ build_portfolio-performance() {
 #build_1password
 #build_sweethome3d
 #build_portfolio-performance
-build_gimp
+#build_gimp
+#build_threat-dragon
