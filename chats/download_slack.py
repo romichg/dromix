@@ -4,7 +4,7 @@ import urllib.parse
 import os
 
 # Define the URL to scrape
-url = 'https://slack.com/downloads/instructions/ubuntu'
+url = 'https://slack.com/downloads/instructions/linux?ddl=1&build=deb'
 # Define filename
 filename = 'slack.deb'
 
@@ -17,7 +17,7 @@ if response.status_code == 200:
     soup = BeautifulSoup(response.content, 'html.parser')
     
     # Find all <a> tags with the href containing 'https://downloads.slack-edge.com/releases/linux'
-    links = soup.find_all('a', href=lambda href: href and 'https://downloads.slack-edge.com/desktop-releases/linux' in href)
+    links = soup.find_all('a', href=lambda href: href and 'slack-desktop' in href)
     
     if links:
         # Extract the href attribute from the first matching <a> tag

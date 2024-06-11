@@ -213,7 +213,7 @@ build_chats() {
    BT="chats"
    echo "Building the $BT image"
    cd ./$BT
-   mv discord.de:b olddiscord.deb
+   mv discord.deb olddiscord.deb
    curl --output discord.deb -L 'https://discord.com/api/download?platform=linux&format=deb'
    mv slack.deb oldslack.deb
    python download_slack.py 
@@ -279,6 +279,7 @@ build_vpn() {
    cd ../
    BT=""
 }
+
 build_portfolio-performance() {
    BT="portfolio-performance"
    echo "Building the $BT image"
@@ -301,6 +302,22 @@ build_threat-dragon() {
    BT=""
 }
 
+build_homebank() {
+   BT="homebank"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
+build_cups() {
+   BT="cups"
+   echo "Building the $BT image"
+   cd ./$BT
+   docker build --no-cache --network=$NET -t $MNT/$IMG-$BT . 
+   cd ../
+   BT=""
+}
 
 #install_prereq
 #copy_components
@@ -328,3 +345,5 @@ build_threat-dragon() {
 #build_portfolio-performance
 #build_gimp
 #build_threat-dragon
+#build_homebank
+#build_cups
